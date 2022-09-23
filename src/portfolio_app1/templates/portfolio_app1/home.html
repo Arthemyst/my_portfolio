@@ -1,8 +1,37 @@
 {% extends "portfolio_app1/base.html" %}
 {% load static %}
 
-{% block page_content %}
+{% block content %}
+
+<body>
 
 
 
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+        <div class="feature col">
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <div class="center">
+                    <h1>Welcome!</h1>
+                    <h2>I am Pawel Lukmin</h2>
+                </div>
+
+            </div>
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <div class="center">
+                    <p>Master engineer of power engineering with over 3
+                        years of work experience in the industry with the use of large amounts of data. Eager to grow as
+                        a Python Developer using my analytical experience, technical education, solid understanding of
+                        programming principles and 1 year of programming experience.</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="feature col">
+
+            <img src="{% static 'images/pawel.png' %}">
+        </div>
+    </div>
+
+</body>
 {% endblock %}
