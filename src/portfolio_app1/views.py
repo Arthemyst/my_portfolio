@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from portfolio_app1.models import Project
-from django.http import HttpResponse
 
 def home(request):
     return render(request, 'portfolio_app1/home.html')
