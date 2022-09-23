@@ -10,7 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
+import sys
 from pathlib import Path
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +28,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-gg*^%9g4&gz3bqfm+_1bz7zcw9dj1m1mz2oto_frws7x&obpl3"
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
+# Django Logging Information
+LOGGING = {
+    "version": 1,
+    "handlers": {"console": {"class": "logging.StreamHandler", "stream": sys.stdout}},
+    "root": {"handlers": ["console"], "level": "DEBUG"},
+}
 
 # Application definition
 
@@ -37,6 +52,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "bootstrap5",
+
 ]
 
 MIDDLEWARE = [
@@ -67,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "personal_portfolio.wsgi.application"
+WSGI_APPLICATION = "conf.wsgi.application"
 
 
 # Database
