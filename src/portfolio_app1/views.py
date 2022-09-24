@@ -6,7 +6,7 @@ def home(request):
     return render(request, 'portfolio_app1/home.html')
 
 def projects(request):
-    Projects = Project.objects.all()
+    projects = Project.objects.filter(active=True)
 
     context = {'projects': projects}
     return render(request, 'portfolio_app1/projects.html', context)
