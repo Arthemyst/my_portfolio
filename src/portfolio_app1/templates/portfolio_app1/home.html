@@ -2,36 +2,76 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .child {
+        /* Center vertically and horizontally */
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        right: 20%;
+        margin: -25px 0 0 -25px;
+        /* Apply negative top and left margins to truly center the element */
+    }
+
+    .back {
+        background-color: blueviolet;
+    }
+</style>
 
 <body>
+    <main class="child">
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+
+            <div class="feature col">
+                <div class="shadow p-3 mb-5 bg-body rounded">
+                    <main class="px-3 text-center">
+
+                        <div class="center">
+                            <h1 style="font-family: Trebuchet MS">Welcome!</h1>
+                            <h2 style="font-family: Trebuchet MS">I am Pawel Lukmin</h2>
+                        </div>
+                    </main>
+                </div>
 
 
 
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 
-        <div class="feature col">
-            <div class="shadow p-3 mb-5 bg-body rounded">
-                <div class="center">
-                    <h1>Welcome!</h1>
-                    <h2>I am Pawel Lukmin</h2>
+                <div class="shadow p-3 mb-5 bg-body rounded">
+                    <div>
+                        <p style="font-family: Trebuchet MS">Master engineer of power engineering with over
+                            3
+                            years of work experience in the industry with the use of large amounts of data.
+                        </p>
+                    </div>
+                </div>
+                <div class="shadow p-3 mb-5 bg-body rounded">
+                    <div>
+                        <p style="font-family: Trebuchet MS">Eager to
+                            grow as
+                            a Python Developer using my analytical experience, technical education, solid
+                            understanding
+                            of
+                            programming principles and 1 year of programming experience.</p>
+
+                    </div>
+
+
+                </div>
+                <div class="row row-cols-2">
+                    <div class="feature col">Linkedin</div>
+                    <div class="feature col">Github</div>
                 </div>
 
             </div>
-            <div class="shadow p-3 mb-5 bg-body rounded">
-                <div class="center">
-                    <p>Master engineer of power engineering with over 3
-                        years of work experience in the industry with the use of large amounts of data. Eager to grow as
-                        a Python Developer using my analytical experience, technical education, solid understanding of
-                        programming principles and 1 year of programming experience.</p>
-                </div>
+            <div class="feature col">
+
+                <img src="{% static 'images/pawel.png' %}" wight=300 height=300>
 
             </div>
-        </div>
-        <div class="feature col">
 
-            <img src="{% static 'images/pawel.png' %}">
         </div>
-    </div>
+    </main>
 
 </body>
+
 {% endblock %}
