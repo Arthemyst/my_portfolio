@@ -42,11 +42,6 @@
         -moz-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
         box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
     }
-
-    .main-container {
-        width: 1200px;
-        margin: 0 auto;
-    }
 </style>
 
 <div>
@@ -58,7 +53,8 @@
         <div>
             <div class="project">
                 <div class="card shadow-sm">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{{ project.thumbnail.url }}" class="card-img-top" alt="...">
+
                     <div class="card-body">
                         <h5 class="card-title">{{project.headline}}</h5>
                         {% if project.sub_headline %}
@@ -75,7 +71,6 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <hr>
                 </div>
             </div>
         </div>
