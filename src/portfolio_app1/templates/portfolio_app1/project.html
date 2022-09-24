@@ -1,6 +1,19 @@
 {% extends "portfolio_app1/base.html" %}
 
 {% block content %}
-<h1>Project template</h1>
+<style>
+</style>
+<div>
+    <h1>{{project.headline}}</h1>
+    {% if project.sub_headline %}
+
+    <h4>{{project.sub_headline}}</h4>
+    {% endif %}
+
+    <p>{{project.body}}</p>
+
+
+
+</div>
 
 {% endblock content %}
