@@ -60,21 +60,19 @@
                 <div class="card shadow-sm">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                        <div>
-                            <h5 class="card-title">{{project.headline}}</h5>
-                            {% if project.sub_headline %}
-                            <p class="card-text">{{project.sub_headline}}</p>
-                            {% endif %}
-                            <a href="#" class="btn btn-primary">Read more</a>
+                        <h5 class="card-title">{{project.headline}}</h5>
+                        {% if project.sub_headline %}
+                        <p class="card-text">{{project.sub_headline}}</p>
+                        {% endif %}
+                        <a href="{% url 'project' project.id %}" class="btn btn-primary">Read more</a>
 
-                            <hr>
-                            <div class="tags-wrapper">
-                                {% for tag in project.tags.all %}
-                                <div class="tag">
-                                    <h6><span class="tag-size">{{tag}}</span></h6>
-                                </div>
-                                {% endfor %}
+                        <hr>
+                        <div class="tags-wrapper">
+                            {% for tag in project.tags.all %}
+                            <div class="tag">
+                                <h6><span class="tag-size">{{tag}}</span></h6>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <hr>
