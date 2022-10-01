@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from portfolio_app1.models import Project
-
+from .models import Project
+from .forms import ProjectForm
 
 def home(request):
     return render(request, "portfolio_app1/home.html")
@@ -29,4 +29,12 @@ def profile(request):
 
 
 def create_project(request):
-    return render(request, "base/post_form.html")
+    form = ProjectForm()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('projects')
+
+    context = {'form': form}
+    return render(request, "portfolio_app1/project_form.html", context)
