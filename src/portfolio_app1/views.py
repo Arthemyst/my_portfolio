@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Project
 from .forms import ProjectForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, "portfolio_app1/home.html")
@@ -27,7 +28,7 @@ def profile(request):
 
 # CRUD VIEWS
 
-
+@login_required(login_url="home")
 def create_project(request):
     form = ProjectForm()
     if request.method == 'POST':
