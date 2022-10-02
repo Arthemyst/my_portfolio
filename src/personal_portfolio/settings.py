@@ -56,7 +56,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "portfolio_app1",
     "bootstrap5",
+    "crispy_forms",
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
