@@ -64,12 +64,17 @@
                 <div class="collapse navbar-collapse" id="bdNavbar">
 
                     <div class="btn-group px-2">
-                        <a class="btn btn-primary" href="{% url 'projects' %}">Projects</a>
+                        <a class="navbar-brand" href="{% url 'projects' %}">Projects</a>
                     </div>
 
-                    <div class="btn-group">
-                        <a class="btn btn-primary" href="">Contact</a>
+                    <div class="btn-group px-2">
+                        <a class="navbar-brand" href="">Contact</a>
                     </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="btn-group px-2">
+                        <a class="navbar-brand" href="{% url 'create_project' %}">Create project</a>
+                    </div>
+                    {% endif %}
 
                 </div>
 

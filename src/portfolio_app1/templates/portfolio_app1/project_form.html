@@ -1,0 +1,36 @@
+{% extends 'portfolio_app1/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style type="text/css">
+    #div_id_tags > div{
+        max-height: 100px;
+        overflow-y: scroll;
+        border: 1px solid #888;
+        padding: 5px;
+        border-radius: 5px;
+    }
+</style>
+<style>
+    .child {
+        /* Center vertically and horizontally */
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        right: 20%;
+        margin: -25px 0 0 -25px;
+        /* Apply negative top and left margins to truly center the element */
+    }
+</style>
+<div class="child">
+    <h3>Project form</h3>
+    <form action="" method="POST" enctype="multipart/form-data">    
+        {% csrf_token %}
+        {{form|crispy}}
+
+        <input class="btn btn-primary" type="submit" name="Submit Project">
+
+    </form>
+</div>
+{% endblock content %}
