@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-
-from .models import Project
-from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+
+from .forms import ProjectForm
+from .models import Project
+
 
 def home(request):
     return render(request, "portfolio_app1/home.html")
@@ -28,39 +29,41 @@ def profile(request):
 
 # CRUD VIEWS
 
+
 @login_required(login_url="home")
 def create_project(request):
     form = ProjectForm()
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return redirect('projects')
+        return redirect("projects")
 
-    context = {'form': form}
+    context = {"form": form}
     return render(request, "portfolio_app1/project_form.html", context)
+
 
 @login_required(login_url="home")
 def update_project(request, pk):
     project = Project.objects.get(id=pk)
     form = ProjectForm(instance=project)
-    
-    if request.method == 'POST':
+
+    if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
-        return redirect('projects')
+        return redirect("projects")
 
-    context = {'form': form}
+    context = {"form": form}
     return render(request, "portfolio_app1/project_form.html", context)
+
 
 @login_required(login_url="home")
 def delete_project(request, pk):
     project = Project.objects.get(id=pk)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         project.delete()
-        return redirect('projects')
-    context = {'item': project}
-    return render(request, 'portfolio_app1/delete.html', context)
-
+        return redirect("projects")
+    context = {"item": project}
+    return render(request, "portfolio_app1/delete.html", context)
