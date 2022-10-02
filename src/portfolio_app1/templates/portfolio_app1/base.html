@@ -70,11 +70,6 @@
                     <div class="btn-group px-2">
                         <a class="navbar-brand" href="">Contact</a>
                     </div>
-                    {% if request.user.is_authenticated %}
-                    <div class="btn-group px-2">
-                        <a class="navbar-brand" href="{% url 'create_project' %}">Create project</a>
-                    </div>
-                    {% endif %}
 
                 </div>
 

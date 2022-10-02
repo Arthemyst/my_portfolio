@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 
 from .filters import ProjectFilter
@@ -14,6 +15,16 @@ def projects(request):
     projects = Project.objects.filter(active=True)
     my_filter = ProjectFilter(request.GET, queryset=projects)
     projects = my_filter.qs
+    project = request.GET.get("page")
+
+    paginator = Paginator(projects.order_by("id"), 6)
+    try:
+        projects = paginator.page(project)
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+    except EmptyPage:
+        projects = paginator.page(paginator.num_pages)
+
     context = {"projects": projects, "my_filter": my_filter}
     return render(request, "portfolio_app1/projects.html", context)
 
