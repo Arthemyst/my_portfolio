@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "portfolio_app1",
     "bootstrap5",
     "crispy_forms",
+    "django_filters",
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
