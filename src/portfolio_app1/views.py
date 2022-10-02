@@ -53,3 +53,14 @@ def update_project(request, pk):
 
     context = {'form': form}
     return render(request, "portfolio_app1/project_form.html", context)
+
+@login_required(login_url="home")
+def delete_project(request, pk):
+    project = Project.objects.get(id=pk)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('projects')
+    context = {'item': project}
+    return render(request, 'portfolio_app1/delete.html', context)
+
