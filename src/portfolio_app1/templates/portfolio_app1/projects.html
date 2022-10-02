@@ -1,6 +1,16 @@
 {% extends "portfolio_app1/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
+<style type="text/css">
+    #div_id_tags > div{
+        font-size: small;
+        overflow-y: scroll;
+        max-height: 60px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+</style>
 <style>
     .tag {
         display: inline-block;
@@ -42,49 +52,65 @@
         -moz-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
         box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
     }
-</style>
 
+    .child {
+        top: 20%;
+        left: 50%;
+        right: 20%;
+        margin: 20px;
+        max-width: 500px;
+    }
+</style>
 <div>
     <h1 class="text-center">Projects</h1>
-
-    <div class="project-wrapper">
-
-        {% for project in projects %}
+    <div class="child">
+        
         <div>
-            <div class="project">
-                <div class="card shadow-sm">
-                    <img src="{{ project.thumbnail.url }}" class="card-img-top" alt="...">
+        <form method="GET">
+            {{my_filter.form|crispy}}
+            <input class="btn btn-primary mt-3" type="submit" value="search">
+        </form>
+        </div>
+    </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{project.headline}}</h5>
-                        {% if project.sub_headline %}
-                            <p class="card-text">{{project.sub_headline}}</p>
-                        {% endif %}
-                        <a href="{% url 'project' project.id %}">Read more</a>
-                        {% if request.user.is_authenticated %}
-                            | <a href="{% url 'update_project' project.id %}">Edit</a>
-                            | <a href="{% url 'delete_project' project.id %}">Delete</a>
-                        {% endif %}
+<div class="project-wrapper">
 
-                        <hr>
-                        <div class="tags-wrapper">
-                            {% for tag in project.tags.all %}
-                                <div class="tag">
-                                    <h6><span class="tag-size">{{tag}}</span></h6>
-                                </div>
-                            {% endfor %}
-                        </div>
+    {% for project in projects %}
+    <div>
+        <div class="project">
+            <div class="card shadow-sm">
+                <img src="{{ project.thumbnail.url }}" class="card-img-top" alt="...">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{project.headline}}</h5>
+                    {% if project.sub_headline %}
+                        <p class="card-text">{{project.sub_headline}}</p>
+                    {% endif %}
+                    <a href="{% url 'project' project.id %}">Read more</a>
+                    {% if request.user.is_authenticated %}
+                        | <a href="{% url 'update_project' project.id %}">Edit</a>
+                        | <a href="{% url 'delete_project' project.id %}">Delete</a>
+                    {% endif %}
+
+                    <hr>
+                    <div class="tags-wrapper">
+                        {% for tag in project.tags.all %}
+                            <div class="tag">
+                                <h6><span class="tag-size">{{tag}}</span></h6>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-
-        {% empty %}
-        <h3>No projects found...</h3>
-        {% endfor %}
     </div>
-</div>
 
+    {% empty %}
+    <h3>No projects found...</h3>
+    {% endfor %}
+</div>
+</div>
+</div>
 
 
 

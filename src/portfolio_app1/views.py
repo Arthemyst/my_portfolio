@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProjectForm
+from .filters import ProjectFilter
 from .models import Project
 
 
@@ -11,8 +12,9 @@ def home(request):
 
 def projects(request):
     projects = Project.objects.filter(active=True)
-
-    context = {"projects": projects}
+    my_filter = ProjectFilter(request.GET, queryset=projects)
+    projects = my_filter.qs
+    context = {"projects": projects, "my_filter": my_filter}
     return render(request, "portfolio_app1/projects.html", context)
 
 
