@@ -1,10 +1,28 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 
 from .filters import ProjectFilter
 from .forms import ProjectForm
 from .models import Project
+import environ
+from pathlib import Path
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR / ".env")
 
 
 def home(request):
@@ -80,3 +98,33 @@ def delete_project(request, pk):
         return redirect("projects")
     context = {"item": project}
     return render(request, "portfolio_app1/delete.html", context)
+
+
+def contact_page(request):
+    return render(request, "portfolio_app1/contact.html")
+
+
+def send_email(request):
+
+    if request.method == "POST":
+
+        template = render_to_string(
+            "portfolio_app1/email_template.html",
+            {
+                "name": request.POST["name"],
+                "email": request.POST["email"],
+                "message": request.POST["message"],
+            },
+        )
+
+        email = EmailMessage(
+            request.POST["subject"],
+            template,
+            settings.EMAIL_HOST_USER,
+            [env("EMAIL_HOST_USER")],
+        )
+
+        email.fail_silently = False
+        email.send()
+
+    return render(request, "portfolio_app1/email_sent.html")
