@@ -35,7 +35,7 @@ def projects(request):
     projects = my_filter.qs
     project = request.GET.get("page")
 
-    paginator = Paginator(projects.order_by("id"), 6)
+    paginator = Paginator(projects.order_by("slug"), 3)
     try:
         projects = paginator.page(project)
     except PageNotAnInteger:
