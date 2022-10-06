@@ -67,24 +67,20 @@
     <div class="container">
         <div class="row">
             <div class="col">
-            <form method="GET">
-                {{my_filter.form|crispy}}
-                <input class="btn btn-primary mt-3" type="submit" value="search">
-            </form>
+                <form method="GET">
+                    {{my_filter.form|crispy}}
+                    <input class="btn btn-primary mt-3" type="submit" value="search">
+                </form>
             </div>
             <div class="col">
-            </div>
-            <div class="col">
-            </div>
-            
-            <div class="col">
-
+                <div class="col">
                     {% if request.user.is_staff %}
                     <a class="btn btn-warning" href="{% url 'create_project' %}">Create Project</a>
                     {% endif %}
-
+                </div>
             </div>
-
+            <div class="col">
+            </div>
         </div>
     </div>
     <br>
