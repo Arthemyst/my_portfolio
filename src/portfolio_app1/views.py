@@ -47,8 +47,8 @@ def projects(request):
     return render(request, "portfolio_app1/projects.html", context)
 
 
-def project(request, pk):
-    project = Project.objects.get(id=pk)
+def project(request, slug):
+    project = Project.objects.get(slug=slug)
 
     context = {"project": project}
     return render(request, "portfolio_app1/project.html", context)
@@ -75,8 +75,8 @@ def create_project(request):
 
 
 @login_required(login_url="home")
-def update_project(request, pk):
-    project = Project.objects.get(id=pk)
+def update_project(request, slug):
+    project = Project.objects.get(slug=slug)
     form = ProjectForm(instance=project)
 
     if request.method == "POST":
@@ -90,8 +90,8 @@ def update_project(request, pk):
 
 
 @login_required(login_url="home")
-def delete_project(request, pk):
-    project = Project.objects.get(id=pk)
+def delete_project(request, slug):
+    project = Project.objects.get(slug=slug)
 
     if request.method == "POST":
         project.delete()
