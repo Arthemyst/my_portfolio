@@ -1,17 +1,17 @@
+from pathlib import Path
+
+import environ
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
-from django.core.mail import EmailMessage
-from django.conf import settings
 from django.template.loader import render_to_string
 
 from .filters import ProjectFilter
 from .forms import ProjectForm
 from .models import Project
-import environ
-from pathlib import Path
 
 env = environ.Env(
     # set casting, default value
