@@ -67,24 +67,20 @@
     <div class="container">
         <div class="row">
             <div class="col">
-            <form method="GET">
-                {{my_filter.form|crispy}}
-                <input class="btn btn-primary mt-3" type="submit" value="search">
-            </form>
+                <form method="GET">
+                    {{my_filter.form|crispy}}
+                    <input class="btn btn-primary mt-3" type="submit" value="search">
+                </form>
             </div>
             <div class="col">
-            </div>
-            <div class="col">
-            </div>
-            
-            <div class="col">
-
+                <div class="col">
                     {% if request.user.is_staff %}
                     <a class="btn btn-warning" href="{% url 'create_project' %}">Create Project</a>
                     {% endif %}
-
+                </div>
             </div>
-
+            <div class="col">
+            </div>
         </div>
     </div>
     <br>
@@ -101,10 +97,10 @@
                         {% if project.sub_headline %}
                             <p class="card-text">{{project.sub_headline}}</p>
                         {% endif %}
-                        <a href="{% url 'project' project.id %}">Read more</a>
+                        <a href="{% url 'project' project.slug %}">Read more</a>
                         {% if request.user.is_authenticated %}
-                            | <a href="{% url 'update_project' project.id %}">Edit</a>
-                            | <a href="{% url 'delete_project' project.id %}">Delete</a>
+                            | <a href="{% url 'update_project' project.slug %}">Edit</a>
+                            | <a href="{% url 'delete_project' project.slug %}">Delete</a>
                         {% endif %}
 
                         <hr>

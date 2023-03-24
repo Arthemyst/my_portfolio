@@ -1,10 +1,28 @@
+from pathlib import Path
+
+import environ
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 
 from .filters import ProjectFilter
 from .forms import ProjectForm
 from .models import Project
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR / ".env")
 
 
 def home(request):
@@ -17,7 +35,7 @@ def projects(request):
     projects = my_filter.qs
     project = request.GET.get("page")
 
-    paginator = Paginator(projects.order_by("id"), 6)
+    paginator = Paginator(projects.order_by("slug"), 3)
     try:
         projects = paginator.page(project)
     except PageNotAnInteger:
@@ -29,8 +47,8 @@ def projects(request):
     return render(request, "portfolio_app1/projects.html", context)
 
 
-def project(request, pk):
-    project = Project.objects.get(id=pk)
+def project(request, slug):
+    project = Project.objects.get(slug=slug)
 
     context = {"project": project}
     return render(request, "portfolio_app1/project.html", context)
@@ -57,8 +75,8 @@ def create_project(request):
 
 
 @login_required(login_url="home")
-def update_project(request, pk):
-    project = Project.objects.get(id=pk)
+def update_project(request, slug):
+    project = Project.objects.get(slug=slug)
     form = ProjectForm(instance=project)
 
     if request.method == "POST":
@@ -72,11 +90,41 @@ def update_project(request, pk):
 
 
 @login_required(login_url="home")
-def delete_project(request, pk):
-    project = Project.objects.get(id=pk)
+def delete_project(request, slug):
+    project = Project.objects.get(slug=slug)
 
     if request.method == "POST":
         project.delete()
         return redirect("projects")
     context = {"item": project}
     return render(request, "portfolio_app1/delete.html", context)
+
+
+def contact_page(request):
+    return render(request, "portfolio_app1/contact.html")
+
+
+def send_email(request):
+
+    if request.method == "POST":
+
+        template = render_to_string(
+            "portfolio_app1/email_template.html",
+            {
+                "name": request.POST["name"],
+                "email": request.POST["email"],
+                "message": request.POST["message"],
+            },
+        )
+
+        email = EmailMessage(
+            request.POST["subject"],
+            template,
+            settings.EMAIL_HOST_USER,
+            [env("EMAIL_HOST_USER")],
+        )
+
+        email.fail_silently = False
+        email.send()
+
+    return render(request, "portfolio_app1/email_sent.html")
